@@ -7,49 +7,76 @@
 //
 
 #import "Translater.h"
-#import "ViewController.h"
 
-static NSString* keyAPI = @"trnsl.1.1.20161130T081948Z.66e342e6aa29a74b.af57acd9946d4a68647632d115c0c67a4acf71c4";
-static NSString* baseRequest = @"https://translate.yandex.net/api/v1.5/tr.json/translate?key=trnsl.1.1.20161130T081948Z.66e342e6aa29a74b.af57acd9946d4a68647632d115c0c67a4acf71c4";
-static ViewController* viewController;
+
+@interface Translater ()
+
+@property(strong, nonatomic) id<TranslaterProtocol> delegate;
+
+@end
+static NSString* keyAPI = @"trnsl.1.1.20161231T110214Z.7b76d42f642da155.22591cff56e8452581acae08780cdd5e8da4ec10";
+static NSString* baseRequest = @"https://translate.yandex.net/api/v1.5/tr.json/translate";
+
 
 @implementation Translater
 
-+ (void) setUpTranslate:(ViewController*)ourViewController {
+- (instancetype)initWithDelegate:(id<TranslaterProtocol>)delegate {
     
-    viewController = ourViewController;
+    self = [super init];
+    if (self) {
+        
+        self.delegate = delegate;
+        
+    }
+    return self;
 }
 
-+ (NSString*) translate:(NSString *)text and:(NSString*)lang {
+
+- (void) translate:(NSString *)text and:(NSString*)lang {
     
+    
+    NSString *postDataString = [NSString stringWithFormat:@"key=%@&text=%@&lang=%@", keyAPI, text, lang];
+//    NSDictionary *postDataJSON = @{ @"key":keyAPI,
+//                                    @"text":text,
+//                                    @"lang":lang
+//                                   };
+    
+    NSURL *url = [NSURL URLWithString:baseRequest];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    request.HTTPBody = [postDataString dataUsingEncoding:NSUTF8StringEncoding];
+    //request.HTTPBody = [NSJSONSerialization dataWithJSONObject:postDataJSON options:NSJSONWritingPrettyPrinted error:nil];
+    request.HTTPMethod = @"POST";
 
     
-    NSString* request = [NSString stringWithFormat:@"%@&text=%@&lang=%@", baseRequest, text, lang];
-    __block NSURL *url = [NSURL URLWithString:request];
-    
-    dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
+    [[[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         
-        NSData *data = [NSData dataWithContentsOfURL:url];
-//        NSString *ret = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-//        NSLog(@"response String = %@", ret);
+        NSArray *answerData;
         
-        NSError* error;
-        NSDictionary *jsonDict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
-        
-        NSString* answer;
-        if (!error) {
-            
-            answer = [jsonDict objectForKey:@"text"][0];
+        if (error) {
+            NSLog(@"Error: \n%@", error);
+            answerData = @[@"Error"];
         } else {
             
-            answer = @"Error";
+            NSDictionary *answer = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
+            NSLog(@"%@", answer);
+            NSInteger statusCode = [[answer valueForKey:@"code"] integerValue];
+            
+            if (statusCode == 200) {
+                
+                answerData = [answer valueForKey:@"text"];
+                NSLog(@"Answer: \n%@", [[answer valueForKey:@"text"] firstObject]);
+                
+            } else {
+                answerData = @[@"Error"];
+            }
         }
-        dispatch_async(dispatch_get_main_queue(), ^(void){
-            [viewController takeAnswer:answer];
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.delegate receiveData:answerData];
         });
-    });
+        
+    }] resume];
     
     
-    return @"test";
 }
 @end

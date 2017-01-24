@@ -10,7 +10,6 @@
 
 @interface ViewController : UIViewController
 
-- (void) takeAnswer:(NSString*)text;
 
 @end
 

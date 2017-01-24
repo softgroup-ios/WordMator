@@ -8,10 +8,14 @@
 
 #import <Foundation/Foundation.h>
 
-@class ViewController;
+@protocol TranslaterProtocol <NSObject>
+
+- (void)receiveData:(NSArray*)data;
+
+@end
 
 @interface Translater : NSObject
 
-+ (void) setUpTranslate:(ViewController*)ourViewController;
-+ (NSString*)translate:(NSString*)text and:(NSString*)lang;
+- (instancetype)initWithDelegate:(id<TranslaterProtocol>)delegate;
+- (void)translate:(NSString*)text and:(NSString*)lang;
 @end

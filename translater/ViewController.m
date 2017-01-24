@@ -9,7 +9,7 @@
 #import "ViewController.h"
 #import "Translater.h"
 
-@interface ViewController ()
+@interface ViewController () <TranslaterProtocol>
 
 @property (weak, nonatomic) IBOutlet UILabel *fromLangLabel;
 @property (weak, nonatomic) IBOutlet UILabel *toLangLabel;
@@ -20,6 +20,8 @@
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *loadingIndocator;
 @property (weak, nonatomic) IBOutlet UIButton *translateButtton;
 
+@property (strong, nonatomic) Translater* translater;
+
 @end
 
 static NSString* lang = @"en-uk";
@@ -28,21 +30,26 @@ static NSString* lang = @"en-uk";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    [Translater setUpTranslate:self];
+    self.translater = [[Translater alloc] initWithDelegate:self];
 }
-
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
 }
 
-- (void) takeAnswer:(NSString*)text {
+- (void)receiveData:(NSArray *)data {
     
     [self.translateButtton setHidden:NO];
     [self.loadingIndocator stopAnimating];
-    self.outPutLabel.text = text;
+    NSMutableString *translatedText = [NSMutableString string];
+    
+    for (NSString *text in data) {
+        [translatedText appendString:text];
+    }
+    self.outPutLabel.text = translatedText;
 }
+
+
 
 - (IBAction)reverseLanguage:(id)sender {
     
@@ -67,7 +74,7 @@ static NSString* lang = @"en-uk";
     [self.translateButtton setHidden:YES];
     [self.loadingIndocator startAnimating];
     
-    [Translater translate:encodedtext and:lang];
+    [self.translater translate:encodedtext and:lang];
 }
 
 @end
