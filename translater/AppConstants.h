@@ -10,6 +10,4 @@
 
 @interface AppConstants : NSObject
 
-+ (NSDictionary*)allLenguage;
-
 @end

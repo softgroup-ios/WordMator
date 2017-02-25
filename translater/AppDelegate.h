@@ -2,7 +2,7 @@
 //  AppDelegate.h
 //  translater
 //
-//  Created by admin on 30.11.16.
+//  Created by Tony Hrabovskyi on 30.11.16.
 //  Copyright © 2016 admin. All rights reserved.
 //
 
