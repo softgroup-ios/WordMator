@@ -17,6 +17,7 @@
 		EA2929011E61B99B00739C76 /* Translate.m in Sources */ = {isa = PBXBuildFile; fileRef = EA2929001E61B99B00739C76 /* Translate.m */; };
 		EA2929041E61B9AF00739C76 /* History.m in Sources */ = {isa = PBXBuildFile; fileRef = EA2929031E61B9AF00739C76 /* History.m */; };
 		EA2929091E61E4C100739C76 /* LanguageSelecting.m in Sources */ = {isa = PBXBuildFile; fileRef = EA2929081E61E4C100739C76 /* LanguageSelecting.m */; };
+		EA78AB1D1E6448CE00D2E4B4 /* HistoryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EA78AB1C1E6448CE00D2E4B4 /* HistoryCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +50,8 @@
 		EA2929071E61E4C100739C76 /* LanguageSelecting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LanguageSelecting.h; sourceTree = "<group>"; };
 		EA2929081E61E4C100739C76 /* LanguageSelecting.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LanguageSelecting.m; sourceTree = "<group>"; };
 		EA29290E1E622C0900739C76 /* translaterUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = translaterUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		EA78AB1B1E6448CE00D2E4B4 /* HistoryCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HistoryCell.h; sourceTree = "<group>"; };
+		EA78AB1C1E6448CE00D2E4B4 /* HistoryCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HistoryCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -94,6 +97,7 @@
 				EA2487441E5DA35400FAFBE1 /* AppConstants.h */,
 				EA2487451E5DA35400FAFBE1 /* AppConstants.m */,
 				EA2487421E5DA02B00FAFBE1 /* ViewControllers */,
+				EA78AB1A1E6448AF00D2E4B4 /* Cells */,
 				84F638EB1DEEC85100FDDD30 /* Model */,
 				84F638DA1DEEC40100FDDD30 /* Main.storyboard */,
 				84F638DD1DEEC40100FDDD30 /* Assets.xcassets */,
@@ -132,6 +136,15 @@
 				EA2929081E61E4C100739C76 /* LanguageSelecting.m */,
 			);
 			name = ViewControllers;
+			sourceTree = "<group>";
+		};
+		EA78AB1A1E6448AF00D2E4B4 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				EA78AB1B1E6448CE00D2E4B4 /* HistoryCell.h */,
+				EA78AB1C1E6448CE00D2E4B4 /* HistoryCell.m */,
+			);
+			name = Cells;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -240,6 +253,7 @@
 			files = (
 				EA2929091E61E4C100739C76 /* LanguageSelecting.m in Sources */,
 				84F638D61DEEC40100FDDD30 /* AppDelegate.m in Sources */,
+				EA78AB1D1E6448CE00D2E4B4 /* HistoryCell.m in Sources */,
 				84F638D31DEEC40100FDDD30 /* main.m in Sources */,
 				EA2929011E61B99B00739C76 /* Translate.m in Sources */,
 				84F638EA1DEEC83E00FDDD30 /* Translator.m in Sources */,
@@ -457,6 +471,7 @@
 				EA2929171E622C0A00739C76 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

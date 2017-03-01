@@ -23,7 +23,6 @@
         _langFrom = langFrom;
         _langOn = langOn;
         _inputText = inputText;
-//        _outputText = @"";
         _isFavorite = FALSE;
     }
     return self;
@@ -56,7 +55,6 @@
 
 @interface Translator ()
 @property (weak, nonatomic) id<TranslatorDelegate> delegate;
-@property (strong, nonatomic) NSDictionary<NSString*, NSString*> *allLangsDictionary;
 
 @end
 
@@ -67,23 +65,32 @@ static NSString *translateURL = @"https://translate.yandex.net/api/v1.5/tr.json/
 static NSString *allLangsURL = @"https://translate.yandex.net/api/v1.5/tr.json/getLangs";
 static NSString *allLangsKey = @"AllSavedLanguages";
 static NSString *historyKey = @"allHistory";
+static Translator *instance;
 
 #pragma mark - public methods
 
++ (Translator*)sharedInstance {
+    return instance;
+}
+
 - (instancetype)initWithDelegate:(id<TranslatorDelegate>)delegate {
     
-    self = [super init];
-    if (self) {
-        self.delegate = delegate;
-        [self loadAllLanguages];
-        [self loadHistory];
-        [[NSNotificationCenter defaultCenter]   addObserver:self
-                                                   selector:@selector(appWillTerminate:)
-                                                       name:UIApplicationWillResignActiveNotification
-                                                     object:[UIApplication sharedApplication]];
+    if (!instance) {
+        self = [super init];
+        if (self) {
+            instance = self;
+            self.delegate = delegate;
+            [self loadAllLanguages];
+            [self loadHistory];
+            [[NSNotificationCenter defaultCenter]   addObserver:self
+                                                       selector:@selector(appWillTerminate:)
+                                                           name:UIApplicationWillResignActiveNotification
+                                                         object:[UIApplication sharedApplication]];
 
+        }
+        return self;
     }
-    return self;
+    return nil;
 }
 
 - (void)translate:(TranslateEntity *)translateEntity {
@@ -94,6 +101,11 @@ static NSString *historyKey = @"allHistory";
     if (langFrom == nil || langOn == nil) {
         NSError *tranlateError = [NSError errorWithDomain:@"translate.yandex" code:200 userInfo:@{NSLocalizedDescriptionKey:@"Language is not found"}];
         [self.delegate receiveTranslate:nil withError:tranlateError];
+        return;
+    }
+    
+    if ([translateEntity.inputText rangeOfCharacterFromSet:[NSCharacterSet letterCharacterSet]].location == NSNotFound) {
+        // error with input text (not found characters), but don't receive because don't want to show error
         return;
     }
     
@@ -112,7 +124,7 @@ static NSString *historyKey = @"allHistory";
         if (!error) {
             
             NSDictionary *answer = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
-            //NSLog(@"%@", answer);
+//            NSLog(@"%@", answer);
             NSInteger statusCode = [[answer valueForKey:@"code"] integerValue];
             
             if (statusCode == 200) {
@@ -121,7 +133,6 @@ static NSString *historyKey = @"allHistory";
                 for (NSString *sentence in textArray) {
                     [outputText appendString:sentence];
                 }
-                // NSLog(@"Answer: \n%@", [[answer valueForKey:@"text"] firstObject]);
                 
             } else {
                 error = [NSError errorWithDomain:@"translate.yandex" code:200 userInfo:@{NSLocalizedDescriptionKey:@"Translate error"}];
@@ -181,6 +192,7 @@ static NSString *historyKey = @"allHistory";
     if (_allLangsDictionary) {
         
         NSArray *allLanguages = [_allLangsDictionary allKeys];
+        allLanguages = [allLanguages sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
         [_delegate receiveLanguagesList:allLanguages withError:nil];
         
     } else {
@@ -217,9 +229,12 @@ static NSString *historyKey = @"allHistory";
                 
                 NSArray *keys = [[answer objectForKey:@"langs"] allKeys];
                 allLanguages = [[answer objectForKey:@"langs"] allValues];
+                allLanguages = [allLanguages sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
                 
                 _allLangsDictionary = [NSDictionary dictionaryWithObjects:keys
                                                                   forKeys:allLanguages];
+                
+                
                 // save all languages in user defaults
                 [[NSUserDefaults standardUserDefaults] setObject:_allLangsDictionary forKey:allLangsKey];
             }

@@ -11,7 +11,7 @@
 @interface TranslateEntity : NSObject <NSCoding>
 
 @property (strong, nonatomic) NSString *outputText;
-@property (strong, nonatomic, readonly) NSString *inputText;
+@property (strong, nonatomic) NSString *inputText;
 
 @property (strong, nonatomic, readonly) NSString *langFrom;
 @property (strong, nonatomic, readonly) NSString *langOn;
@@ -20,7 +20,7 @@
 
 - (instancetype)initWithLangFrom:(NSString*)langFrom
                        andLangOn:(NSString*)langOn
-                         andInput:(NSString*)inputText;
+                        andInput:(NSString*)inputText;
 @end
 
 
@@ -33,8 +33,10 @@
 
 @interface Translator : NSObject
 
-//@property (strong, nonatomic, readonly) NSArray<NSString*> *allLanguages; // dictionary with all languages, readonly
 @property (strong, nonatomic) NSMutableArray<TranslateEntity *> *history; // history of translation
+@property (strong, nonatomic, readonly) NSDictionary<NSString*, NSString*> *allLangsDictionary; // all languages code from full name
+
++ (Translator*)sharedInstance;
 
 - (instancetype)init NS_UNAVAILABLE; // close standard init like private
 - (instancetype)initWithDelegate:(id<TranslatorDelegate>)delegate; // delegate for receive translator answers
