@@ -6,12 +6,15 @@
 //  Copyright © 2017 admin. All rights reserved.
 //
 
+#import "LanguageCell.h"
+#import "HeaderCell.h"
 #import "LanguageSelecting.h"
 
 @interface LanguageSelecting () <UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
+@property (weak, nonatomic) IBOutlet UILabel *issueMessageLabel;
 
 @property (strong, nonatomic) NSArray<NSString *> *languageList;
 @property (strong, nonatomic) NSArray<NSString *> *searchResult;
@@ -24,6 +27,10 @@
 static NSString *selectingCellIdentifier = @"LanguageSelectingCell";
 static NSString *favoritesLanguagesKey = @"FavoritesLanguagesArray";
 static NSUInteger maxFavoriteLanguages = 5;
+static NSString *errorLoadingMessage = @"Languages loading went wrong,\n please re-select language.";
+static NSString *emptySearchResultMessage = @"Nothing found.";
+static NSString *languageCellIdentifier = @"LanguageCell";
+static NSString *headerCellIdentifier = @"HeaderCell";
 
 #pragma mark - Life Time
 
@@ -35,22 +42,24 @@ static NSUInteger maxFavoriteLanguages = 5;
 #pragma mark - Public Methods
 
 - (void)selectLanguageFromList:(NSArray<NSString *> *)languageList {
+    
+    self.issueMessageLabel.text = (languageList.count > 0) ? emptySearchResultMessage : errorLoadingMessage;
+    
     self.languageList = languageList;
     self.searchResult = languageList;
 }
 
 #pragma mark - UISearchBarDelegate
 
-- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {   // called when text changes (including clear)
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
     [self filterContentForSearch:searchBar.text];
 }
 
-- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar { // called when keyboard search button pressed
-    //[self filterContentForSearch:searchBar.text];
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
     [self.searchBar resignFirstResponder];
 }
 
-- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar { // called when cancel button pressed
+- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
     [self.searchBar resignFirstResponder];
 }
 
@@ -115,43 +124,58 @@ static NSUInteger maxFavoriteLanguages = 5;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+
     NSString *selectedLanguage;
     if (indexPath.section == 0) {
         selectedLanguage = [self.favoriteLanguages objectAtIndex:indexPath.row];
     } else if (indexPath.section == 1) {
         selectedLanguage = [self.searchResult objectAtIndex:indexPath.row];
-        [self addFavoriteLanguage:selectedLanguage];
     }
     
+    [self addFavoriteLanguage:selectedLanguage];
     [self.delegate receiveSelectedLanguage:selectedLanguage];
+    [self.searchBar resignFirstResponder];
     [self selectingCancelAction:nil];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    return 30.0F;
+    if (section == 0 && self.favoriteLanguages.count > 0) {
+        return 30.0F;
+    } else if (section == 1 && self.languageList.count > 0) {
+        return 30.0F;
+    }
+    return 0.0F;
 }
 
-- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+//- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+//    if (section == 0) {
+//        return @"Favorite Languages:";
+//    } else if (section == 1) {
+//        return @"All Languages:";
+//    }
+//    return @"";
+//}
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    
+    HeaderCell *header = [tableView dequeueReusableCellWithIdentifier:headerCellIdentifier];
     if (section == 0) {
-        return @"Favorite Languages:";
+        header.languageTypeLabel.text = @"Favorite Languages:";
     } else if (section == 1) {
-        return @"All Languages:";
+        header.languageTypeLabel.text = @"All Languages:";
     }
-    return @"";
+    
+    return header;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:selectingCellIdentifier];
-    
-    if (!cell) {
-        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:selectingCellIdentifier];
-    }
+    LanguageCell *cell = [tableView dequeueReusableCellWithIdentifier:languageCellIdentifier];
     
     if (indexPath.section == 0) {
-        cell.textLabel.text = [self.favoriteLanguages objectAtIndex:indexPath.row];
+        cell.languageLabel.text = [self.favoriteLanguages objectAtIndex:indexPath.row];
     } else if (indexPath.section == 1) {
-        cell.textLabel.text = [self.searchResult objectAtIndex:indexPath.row];
+        cell.languageLabel.text = [self.searchResult objectAtIndex:indexPath.row];
     }
     return cell;
 }
@@ -161,13 +185,15 @@ static NSUInteger maxFavoriteLanguages = 5;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    NSUInteger rowNumber = 0;
     
     if (section == 0) {
-        return self.favoriteLanguages.count;
+        rowNumber = self.favoriteLanguages.count;
     } else if (section == 1) {
-        return self.searchResult.count;
+        rowNumber = self.searchResult.count;
+        [self.issueMessageLabel setHidden:(rowNumber > 0)];
     }
-    return 0;
+    return rowNumber;
 }
 
 

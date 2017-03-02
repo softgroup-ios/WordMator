@@ -78,6 +78,7 @@ static Translator *instance;
     if (!instance) {
         self = [super init];
         if (self) {
+            
             instance = self;
             self.delegate = delegate;
             [self loadAllLanguages];
@@ -164,6 +165,10 @@ static Translator *instance;
 }
 
 - (void)clearHistory {
+    
+    for (TranslateEntity *translateEntity in self.history) {
+        translateEntity.isFavorite = FALSE;
+    }
     _history = [NSMutableArray array];
 }
 
@@ -228,11 +233,11 @@ static Translator *instance;
             } else {
                 
                 NSArray *keys = [[answer objectForKey:@"langs"] allKeys];
-                allLanguages = [[answer objectForKey:@"langs"] allValues];
-                allLanguages = [allLanguages sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
+                NSArray *values = [[answer objectForKey:@"langs"] allValues];
+                allLanguages = [values sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
                 
                 _allLangsDictionary = [NSDictionary dictionaryWithObjects:keys
-                                                                  forKeys:allLanguages];
+                                                                  forKeys:values];
                 
                 
                 // save all languages in user defaults

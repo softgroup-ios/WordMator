@@ -13,7 +13,9 @@
 		84F638DE1DEEC40100FDDD30 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 84F638DD1DEEC40100FDDD30 /* Assets.xcassets */; };
 		84F638E11DEEC40100FDDD30 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84F638DF1DEEC40100FDDD30 /* LaunchScreen.storyboard */; };
 		84F638EA1DEEC83E00FDDD30 /* Translator.m in Sources */ = {isa = PBXBuildFile; fileRef = 84F638E91DEEC83E00FDDD30 /* Translator.m */; };
-		EA2487461E5DA35400FAFBE1 /* AppConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = EA2487451E5DA35400FAFBE1 /* AppConstants.m */; };
+		EA1ED7A31E68497700717280 /* Detail.m in Sources */ = {isa = PBXBuildFile; fileRef = EA1ED7A21E68497700717280 /* Detail.m */; };
+		EA1ED7A61E686C2400717280 /* LanguageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EA1ED7A51E686C2400717280 /* LanguageCell.m */; };
+		EA1ED7A91E686C3B00717280 /* HeaderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EA1ED7A81E686C3B00717280 /* HeaderCell.m */; };
 		EA2929011E61B99B00739C76 /* Translate.m in Sources */ = {isa = PBXBuildFile; fileRef = EA2929001E61B99B00739C76 /* Translate.m */; };
 		EA2929041E61B9AF00739C76 /* History.m in Sources */ = {isa = PBXBuildFile; fileRef = EA2929031E61B9AF00739C76 /* History.m */; };
 		EA2929091E61E4C100739C76 /* LanguageSelecting.m in Sources */ = {isa = PBXBuildFile; fileRef = EA2929081E61E4C100739C76 /* LanguageSelecting.m */; };
@@ -41,8 +43,12 @@
 		84F638E21DEEC40100FDDD30 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		84F638E81DEEC83E00FDDD30 /* Translator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Translator.h; sourceTree = "<group>"; };
 		84F638E91DEEC83E00FDDD30 /* Translator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Translator.m; sourceTree = "<group>"; };
-		EA2487441E5DA35400FAFBE1 /* AppConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppConstants.h; sourceTree = "<group>"; };
-		EA2487451E5DA35400FAFBE1 /* AppConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppConstants.m; sourceTree = "<group>"; };
+		EA1ED7A11E68497700717280 /* Detail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Detail.h; sourceTree = "<group>"; };
+		EA1ED7A21E68497700717280 /* Detail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Detail.m; sourceTree = "<group>"; };
+		EA1ED7A41E686C2400717280 /* LanguageCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LanguageCell.h; sourceTree = "<group>"; };
+		EA1ED7A51E686C2400717280 /* LanguageCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LanguageCell.m; sourceTree = "<group>"; };
+		EA1ED7A71E686C3B00717280 /* HeaderCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HeaderCell.h; sourceTree = "<group>"; };
+		EA1ED7A81E686C3B00717280 /* HeaderCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HeaderCell.m; sourceTree = "<group>"; };
 		EA2928FF1E61B99B00739C76 /* Translate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Translate.h; sourceTree = "<group>"; };
 		EA2929001E61B99B00739C76 /* Translate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Translate.m; sourceTree = "<group>"; };
 		EA2929021E61B9AF00739C76 /* History.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = History.h; sourceTree = "<group>"; };
@@ -94,8 +100,6 @@
 			children = (
 				84F638D41DEEC40100FDDD30 /* AppDelegate.h */,
 				84F638D51DEEC40100FDDD30 /* AppDelegate.m */,
-				EA2487441E5DA35400FAFBE1 /* AppConstants.h */,
-				EA2487451E5DA35400FAFBE1 /* AppConstants.m */,
 				EA2487421E5DA02B00FAFBE1 /* ViewControllers */,
 				EA78AB1A1E6448AF00D2E4B4 /* Cells */,
 				84F638EB1DEEC85100FDDD30 /* Model */,
@@ -130,10 +134,12 @@
 			children = (
 				EA2928FF1E61B99B00739C76 /* Translate.h */,
 				EA2929001E61B99B00739C76 /* Translate.m */,
-				EA2929021E61B9AF00739C76 /* History.h */,
-				EA2929031E61B9AF00739C76 /* History.m */,
 				EA2929071E61E4C100739C76 /* LanguageSelecting.h */,
 				EA2929081E61E4C100739C76 /* LanguageSelecting.m */,
+				EA2929021E61B9AF00739C76 /* History.h */,
+				EA2929031E61B9AF00739C76 /* History.m */,
+				EA1ED7A11E68497700717280 /* Detail.h */,
+				EA1ED7A21E68497700717280 /* Detail.m */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -143,6 +149,10 @@
 			children = (
 				EA78AB1B1E6448CE00D2E4B4 /* HistoryCell.h */,
 				EA78AB1C1E6448CE00D2E4B4 /* HistoryCell.m */,
+				EA1ED7A41E686C2400717280 /* LanguageCell.h */,
+				EA1ED7A51E686C2400717280 /* LanguageCell.m */,
+				EA1ED7A71E686C3B00717280 /* HeaderCell.h */,
+				EA1ED7A81E686C3B00717280 /* HeaderCell.m */,
 			);
 			name = Cells;
 			sourceTree = "<group>";
@@ -251,14 +261,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EA1ED7A91E686C3B00717280 /* HeaderCell.m in Sources */,
 				EA2929091E61E4C100739C76 /* LanguageSelecting.m in Sources */,
 				84F638D61DEEC40100FDDD30 /* AppDelegate.m in Sources */,
+				EA1ED7A31E68497700717280 /* Detail.m in Sources */,
 				EA78AB1D1E6448CE00D2E4B4 /* HistoryCell.m in Sources */,
 				84F638D31DEEC40100FDDD30 /* main.m in Sources */,
 				EA2929011E61B99B00739C76 /* Translate.m in Sources */,
 				84F638EA1DEEC83E00FDDD30 /* Translator.m in Sources */,
 				EA2929041E61B9AF00739C76 /* History.m in Sources */,
-				EA2487461E5DA35400FAFBE1 /* AppConstants.m in Sources */,
+				EA1ED7A61E686C2400717280 /* LanguageCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -340,7 +352,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -383,7 +395,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -397,7 +409,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = TK347G5S3D;
 				INFOPLIST_FILE = translater/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = ua.com.softgroup.translater;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -410,7 +422,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = TK347G5S3D;
 				INFOPLIST_FILE = translater/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = ua.com.softgroup.translater;
 				PRODUCT_NAME = "$(TARGET_NAME)";

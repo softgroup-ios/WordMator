@@ -87,7 +87,7 @@ static NSString *langOnKey = @"LanguageOnSavedKey";
 
 - (void)viewDidAppear:(BOOL)animated {
     // set input active
-    [self.inputTextView becomeFirstResponder];
+   // [self.inputTextView becomeFirstResponder];
 }
 
 #pragma mark - Users Actions
@@ -117,6 +117,7 @@ static NSString *langOnKey = @"LanguageOnSavedKey";
         [self output:nil withError:nil];
     }
     [self.clearInputButton setHidden:!(self.isInputEditing)];
+    self.translatingEntity = nil;
 }
 
 - (IBAction)saveAction:(id)sender {
@@ -244,6 +245,7 @@ static NSString *langOnKey = @"LanguageOnSavedKey";
     if ([_inputTextView.text rangeOfCharacterFromSet:[NSCharacterSet letterCharacterSet]].location == NSNotFound) {
         // didn't found any characters - clear outputtextView
         [self output:nil withError:nil];
+        self.translatingEntity = nil;
     }
 }
 

@@ -8,6 +8,7 @@
 
 #import "Translator.h"
 #import "HistoryCell.h"
+#import "Detail.h"
 #import "History.h"
 
 
@@ -16,6 +17,7 @@
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UILabel *emptyMessageLabel;
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
+
 // controls
 @property (strong, nonatomic) Translator *translator;
 @property (strong, nonatomic) NSArray *searchResult;
@@ -25,9 +27,14 @@
 @implementation History
 
 static NSString *historyCellIdentifier = @"HistoryCell";
+static NSString *detailSegueIdentifier = @"ShowTranslateDetail";
+static NSString *emptyFavotitesAtAll = @"There are no translations in your Favorites.";
+static NSString *emptySearchResultMessage = @"Nothing found.";
+static NSString *HeaderCellIdentifier = @"Header";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     self.tableView.allowsMultipleSelectionDuringEditing = NO;
     self.translator = [Translator sharedInstance];
     self.searchResult = self.translator.history;
@@ -35,7 +42,7 @@ static NSString *historyCellIdentifier = @"HistoryCell";
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-
+    self.emptyMessageLabel.text = (self.translator.history.count > 0) ? emptySearchResultMessage : emptyFavotitesAtAll;
     [self filterContentForSearch:self.searchBar.text];
 }
 
@@ -79,8 +86,20 @@ static NSString *historyCellIdentifier = @"HistoryCell";
 
 #pragma mark - UITableViewDelegate
 
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:HeaderCellIdentifier];
+    if (cell == nil) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:HeaderCellIdentifier];
+    }
+    
+    return cell;
+}
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView cellForRowAtIndexPath:indexPath].selected = FALSE;
+    TranslateEntity *translateEntity = [self.searchResult objectAtIndex:indexPath.row];
+    [self performSegueWithIdentifier:detailSegueIdentifier sender:translateEntity];
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
@@ -115,6 +134,15 @@ static NSString *historyCellIdentifier = @"HistoryCell";
     return rowCount;
 }
 
+#pragma mark - Navigation
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(TranslateEntity *)translateEntity {
+    
+    if ([segue.identifier isEqualToString:detailSegueIdentifier]) {
+        Detail *detailVC = [segue destinationViewController];
+        [detailVC showTranslateDetail:translateEntity];
+    }
+}
 
 
 @end
