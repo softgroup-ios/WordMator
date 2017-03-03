@@ -16,7 +16,7 @@
 @property (strong, nonatomic, readonly) NSString *langFrom;
 @property (strong, nonatomic, readonly) NSString *langOn;
 
-@property (assign, nonatomic) BOOL isFavorite;
+@property (assign, nonatomic, setter=setFavorite:) BOOL isFavorite;
 
 - (instancetype)initWithLangFrom:(NSString*)langFrom
                        andLangOn:(NSString*)langOn

@@ -42,22 +42,22 @@ static NSString *HeaderCellIdentifier = @"Header";
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    
     self.emptyMessageLabel.text = (self.translator.history.count > 0) ? emptySearchResultMessage : emptyFavotitesAtAll;
     [self filterContentForSearch:self.searchBar.text];
 }
 
 #pragma mark - UISearchBarDelegate
 
-- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {   // called when text changes (including clear)
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
     [self filterContentForSearch:searchBar.text];
 }
 
-- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar { // called when keyboard search button pressed
-    //[self filterContentForSearch:searchBar.text];
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
     [self.searchBar resignFirstResponder];
 }
 
-- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar { // called when cancel button pressed
+- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
     [self.searchBar resignFirstResponder];
 }
 
@@ -79,9 +79,19 @@ static NSString *HeaderCellIdentifier = @"Header";
 
 - (IBAction)clearHistoryAction:(id)sender {
     
-    [self.translator clearHistory];
-    self.searchResult = self.translator.history;
-    [self.tableView reloadData];
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Clear All" message:@"Are you sure?" preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil];
+    UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"Yes" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+        [self.translator clearHistory];
+        self.searchResult = self.translator.history;
+        [self.tableView reloadData];
+        self.emptyMessageLabel.text = emptyFavotitesAtAll;
+    }];
+    
+    [alertController addAction:cancelAction];
+    [alertController addAction:okAction];
+    
+    [self presentViewController:alertController animated:YES completion:nil];
 }
 
 #pragma mark - UITableViewDelegate
@@ -108,9 +118,7 @@ static NSString *HeaderCellIdentifier = @"Header";
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     HistoryCell *historyCell = [tableView dequeueReusableCellWithIdentifier:historyCellIdentifier];
-    
     [historyCell showHistory:[self.searchResult objectAtIndex:indexPath.row]];
-    
     return historyCell;
 }
 
@@ -123,8 +131,8 @@ static NSString *HeaderCellIdentifier = @"Header";
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         TranslateEntity *translateEntity = [self.searchResult objectAtIndex:indexPath.row];
         translateEntity.isFavorite = FALSE;
-        [self.translator.history removeObject:translateEntity];
         [self.tableView reloadData];
+        self.emptyMessageLabel.text = (self.translator.history.count > 0) ? emptySearchResultMessage : emptyFavotitesAtAll;
     }
 }
 

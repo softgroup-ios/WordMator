@@ -55,7 +55,14 @@ static NSString *langOnKey = @"LanguageOnSavedKey";
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    [[UITabBar appearance] setUnselectedItemTintColor:[UIColor blackColor]];
+    [[UITabBar appearance] setTintColor:[UIColor grayColor]];
+    
     // init view
+    self.langFromButton.layer.cornerRadius = 5.0F;
+    self.langFromButton.clipsToBounds = YES;
+    self.langOnButton.layer.cornerRadius = 5.0F;
+    self.langOnButton.clipsToBounds = YES;
     self.inputTextView.textContainerInset = UIEdgeInsetsMake(8, 0, 8, self.clearInputButton.frame.size.width);
     [self deactivateInputView];
     [self.loadingIndicator setHidden:FALSE];
@@ -94,11 +101,13 @@ static NSString *langOnKey = @"LanguageOnSavedKey";
 
 - (IBAction)langFromAction:(id)sender {
     self.selectionStatus = SelectionStatusLangFrom;
+    [self deactivateInputView];
     [self performSegueWithIdentifier:langSelectingSegueIdentifier sender:nil];
 }
 
 - (IBAction)langOnAction:(id)sender {
     self.selectionStatus = SelectionStatusLangOn;
+    [self deactivateInputView];
     [self performSegueWithIdentifier:langSelectingSegueIdentifier sender:nil];
 }
 
@@ -118,13 +127,13 @@ static NSString *langOnKey = @"LanguageOnSavedKey";
     }
     [self.clearInputButton setHidden:!(self.isInputEditing)];
     self.translatingEntity = nil;
+    self.saveButton.selected = FALSE;
 }
 
 - (IBAction)saveAction:(id)sender {
     if (self.translatingEntity.isFavorite) {
         
         self.translatingEntity.isFavorite = FALSE;
-        [self.translator.history removeObject:self.translatingEntity];
         self.saveButton.selected = FALSE;
     } else {
         
@@ -246,6 +255,7 @@ static NSString *langOnKey = @"LanguageOnSavedKey";
         // didn't found any characters - clear outputtextView
         [self output:nil withError:nil];
         self.translatingEntity = nil;
+        self.saveButton.selected = FALSE;
     }
 }
 

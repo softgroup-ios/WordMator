@@ -28,6 +28,15 @@
     return self;
 }
 
+#pragma mark - Setters
+
+- (void)setFavorite:(BOOL)favorite {
+    _isFavorite = favorite;
+    if (!favorite) {
+        [[Translator sharedInstance].history removeObject:self];
+    }
+}
+
 #pragma mark - NSCoding
 
 - (void)encodeWithCoder:(NSCoder *)aCoder {
@@ -111,8 +120,8 @@ static Translator *instance;
     }
     
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:translateURL]];
-    
-    NSString *postDataString = [NSString stringWithFormat:@"key=%@&text=%@&lang=%@-%@", keyAPI, translateEntity.inputText, langFrom, langOn];
+    NSString *allowedInput = [translateEntity.inputText stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
+    NSString *postDataString = [NSString stringWithFormat:@"key=%@&text=%@&lang=%@-%@", keyAPI, allowedInput, langFrom, langOn];
     request.HTTPBody = [postDataString dataUsingEncoding:NSUTF8StringEncoding];
     request.HTTPMethod = @"POST";
     

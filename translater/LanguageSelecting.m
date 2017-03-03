@@ -13,20 +13,21 @@
 @interface LanguageSelecting () <UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
-@property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 @property (weak, nonatomic) IBOutlet UILabel *issueMessageLabel;
+@property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 
 @property (strong, nonatomic) NSArray<NSString *> *languageList;
 @property (strong, nonatomic) NSArray<NSString *> *searchResult;
 @property (strong, nonatomic) NSMutableArray<NSString *> *favoriteLanguages;
+@property (strong, nonatomic) NSArray<NSString *> *searchedFavoriteLanguages;
 
 @end
 
 @implementation LanguageSelecting
 
+static NSUInteger maxFavoriteLanguages = 5;
 static NSString *selectingCellIdentifier = @"LanguageSelectingCell";
 static NSString *favoritesLanguagesKey = @"FavoritesLanguagesArray";
-static NSUInteger maxFavoriteLanguages = 5;
 static NSString *errorLoadingMessage = @"Languages loading went wrong,\n please re-select language.";
 static NSString *emptySearchResultMessage = @"Nothing found.";
 static NSString *languageCellIdentifier = @"LanguageCell";
@@ -37,14 +38,13 @@ static NSString *headerCellIdentifier = @"HeaderCell";
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.favoriteLanguages = [self getFavoriteLanguages];
+    self.searchedFavoriteLanguages = self.favoriteLanguages;
+    self.issueMessageLabel.text = (self.languageList.count > 0) ? emptySearchResultMessage : errorLoadingMessage;
 }
 
 #pragma mark - Public Methods
 
 - (void)selectLanguageFromList:(NSArray<NSString *> *)languageList {
-    
-    self.issueMessageLabel.text = (languageList.count > 0) ? emptySearchResultMessage : errorLoadingMessage;
-    
     self.languageList = languageList;
     self.searchResult = languageList;
 }
@@ -59,9 +59,6 @@ static NSString *headerCellIdentifier = @"HeaderCell";
     [self.searchBar resignFirstResponder];
 }
 
-- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
-    [self.searchBar resignFirstResponder];
-}
 
 #pragma mark - SearchController
 
@@ -69,9 +66,12 @@ static NSString *headerCellIdentifier = @"HeaderCell";
     if ([searchText rangeOfCharacterFromSet:[NSCharacterSet letterCharacterSet]].location != NSNotFound) {
         NSPredicate *searchPredicete = [NSPredicate predicateWithFormat:@"SELF BEGINSWITH[cd] %@", searchText];
         self.searchResult = [self.languageList filteredArrayUsingPredicate:searchPredicete];
+        self.searchedFavoriteLanguages = [self.favoriteLanguages filteredArrayUsingPredicate:searchPredicete];
     } else {
         self.searchResult = self.languageList;
+        self.searchedFavoriteLanguages = self.favoriteLanguages;
     }
+
     [self.tableView reloadData];
 }
 
@@ -127,7 +127,7 @@ static NSString *headerCellIdentifier = @"HeaderCell";
 
     NSString *selectedLanguage;
     if (indexPath.section == 0) {
-        selectedLanguage = [self.favoriteLanguages objectAtIndex:indexPath.row];
+        selectedLanguage = [self.searchedFavoriteLanguages objectAtIndex:indexPath.row];
     } else if (indexPath.section == 1) {
         selectedLanguage = [self.searchResult objectAtIndex:indexPath.row];
     }
@@ -139,33 +139,26 @@ static NSString *headerCellIdentifier = @"HeaderCell";
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    if (section == 0 && self.favoriteLanguages.count > 0) {
+    if (section == 0 && self.searchedFavoriteLanguages.count > 0) {
         return 30.0F;
-    } else if (section == 1 && self.languageList.count > 0) {
+    } else if (section == 1 && self.searchResult.count > 0) {
         return 30.0F;
     }
     return 0.0F;
 }
 
-//- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-//    if (section == 0) {
-//        return @"Favorite Languages:";
-//    } else if (section == 1) {
-//        return @"All Languages:";
-//    }
-//    return @"";
-//}
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     
     HeaderCell *header = [tableView dequeueReusableCellWithIdentifier:headerCellIdentifier];
+    
     if (section == 0) {
         header.languageTypeLabel.text = @"Favorite Languages:";
     } else if (section == 1) {
         header.languageTypeLabel.text = @"All Languages:";
     }
     
-    return header;
+    return header.contentView;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -173,11 +166,12 @@ static NSString *headerCellIdentifier = @"HeaderCell";
     LanguageCell *cell = [tableView dequeueReusableCellWithIdentifier:languageCellIdentifier];
     
     if (indexPath.section == 0) {
-        cell.languageLabel.text = [self.favoriteLanguages objectAtIndex:indexPath.row];
+        cell.languageLabel.text = [self.searchedFavoriteLanguages objectAtIndex:indexPath.row];
     } else if (indexPath.section == 1) {
         cell.languageLabel.text = [self.searchResult objectAtIndex:indexPath.row];
     }
     return cell;
+
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -188,7 +182,7 @@ static NSString *headerCellIdentifier = @"HeaderCell";
     NSUInteger rowNumber = 0;
     
     if (section == 0) {
-        rowNumber = self.favoriteLanguages.count;
+        rowNumber = self.searchedFavoriteLanguages.count;
     } else if (section == 1) {
         rowNumber = self.searchResult.count;
         [self.issueMessageLabel setHidden:(rowNumber > 0)];

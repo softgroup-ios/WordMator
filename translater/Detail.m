@@ -52,7 +52,8 @@
 }
 
 - (IBAction)removeAction:(id)sender {
-    
+    self.translateEntity.isFavorite = FALSE;
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 

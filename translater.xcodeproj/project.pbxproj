@@ -22,15 +22,18 @@
 		EA78AB1D1E6448CE00D2E4B4 /* HistoryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EA78AB1C1E6448CE00D2E4B4 /* HistoryCell.m */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		EA2929131E622C0A00739C76 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 84F638C61DEEC40100FDDD30 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 84F638CD1DEEC40100FDDD30;
-			remoteInfo = translater;
+/* Begin PBXCopyFilesBuildPhase section */
+		EA1ED7C01E697CEF00717280 /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
 		};
-/* End PBXContainerItemProxy section */
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		84F638CE1DEEC40100FDDD30 /* translater.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = translater.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -49,26 +52,19 @@
 		EA1ED7A51E686C2400717280 /* LanguageCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LanguageCell.m; sourceTree = "<group>"; };
 		EA1ED7A71E686C3B00717280 /* HeaderCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HeaderCell.h; sourceTree = "<group>"; };
 		EA1ED7A81E686C3B00717280 /* HeaderCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HeaderCell.m; sourceTree = "<group>"; };
+		EA1ED7B01E697CEF00717280 /* NotificationCenter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NotificationCenter.framework; path = System/Library/Frameworks/NotificationCenter.framework; sourceTree = SDKROOT; };
 		EA2928FF1E61B99B00739C76 /* Translate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Translate.h; sourceTree = "<group>"; };
 		EA2929001E61B99B00739C76 /* Translate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Translate.m; sourceTree = "<group>"; };
 		EA2929021E61B9AF00739C76 /* History.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = History.h; sourceTree = "<group>"; };
 		EA2929031E61B9AF00739C76 /* History.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = History.m; sourceTree = "<group>"; };
 		EA2929071E61E4C100739C76 /* LanguageSelecting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LanguageSelecting.h; sourceTree = "<group>"; };
 		EA2929081E61E4C100739C76 /* LanguageSelecting.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LanguageSelecting.m; sourceTree = "<group>"; };
-		EA29290E1E622C0900739C76 /* translaterUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = translaterUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA78AB1B1E6448CE00D2E4B4 /* HistoryCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HistoryCell.h; sourceTree = "<group>"; };
 		EA78AB1C1E6448CE00D2E4B4 /* HistoryCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HistoryCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		84F638CB1DEEC40100FDDD30 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		EA29290B1E622C0900739C76 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -82,6 +78,7 @@
 			isa = PBXGroup;
 			children = (
 				84F638D01DEEC40100FDDD30 /* translater */,
+				EA1ED7AF1E697CEF00717280 /* Frameworks */,
 				84F638CF1DEEC40100FDDD30 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -90,7 +87,6 @@
 			isa = PBXGroup;
 			children = (
 				84F638CE1DEEC40100FDDD30 /* translater.app */,
-				EA29290E1E622C0900739C76 /* translaterUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -127,6 +123,14 @@
 				84F638E91DEEC83E00FDDD30 /* Translator.m */,
 			);
 			name = Model;
+			sourceTree = "<group>";
+		};
+		EA1ED7AF1E697CEF00717280 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				EA1ED7B01E697CEF00717280 /* NotificationCenter.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		EA2487421E5DA02B00FAFBE1 /* ViewControllers */ = {
@@ -167,6 +171,7 @@
 				84F638CA1DEEC40100FDDD30 /* Sources */,
 				84F638CB1DEEC40100FDDD30 /* Frameworks */,
 				84F638CC1DEEC40100FDDD30 /* Resources */,
+				EA1ED7C01E697CEF00717280 /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
@@ -176,24 +181,6 @@
 			productName = translater;
 			productReference = 84F638CE1DEEC40100FDDD30 /* translater.app */;
 			productType = "com.apple.product-type.application";
-		};
-		EA29290D1E622C0900739C76 /* translaterUITests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = EA2929151E622C0A00739C76 /* Build configuration list for PBXNativeTarget "translaterUITests" */;
-			buildPhases = (
-				EA29290A1E622C0900739C76 /* Sources */,
-				EA29290B1E622C0900739C76 /* Frameworks */,
-				EA29290C1E622C0900739C76 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				EA2929141E622C0A00739C76 /* PBXTargetDependency */,
-			);
-			name = translaterUITests;
-			productName = translaterUITests;
-			productReference = EA29290E1E622C0900739C76 /* translaterUITests.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
 
@@ -208,12 +195,6 @@
 						CreatedOnToolsVersion = 8.1;
 						DevelopmentTeam = TK347G5S3D;
 						ProvisioningStyle = Automatic;
-					};
-					EA29290D1E622C0900739C76 = {
-						CreatedOnToolsVersion = 8.2.1;
-						DevelopmentTeam = TK347G5S3D;
-						ProvisioningStyle = Automatic;
-						TestTargetID = 84F638CD1DEEC40100FDDD30;
 					};
 				};
 			};
@@ -231,7 +212,6 @@
 			projectRoot = "";
 			targets = (
 				84F638CD1DEEC40100FDDD30 /* translater */,
-				EA29290D1E622C0900739C76 /* translaterUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -244,13 +224,6 @@
 				84F638E11DEEC40100FDDD30 /* LaunchScreen.storyboard in Resources */,
 				84F638DE1DEEC40100FDDD30 /* Assets.xcassets in Resources */,
 				84F638DC1DEEC40100FDDD30 /* Main.storyboard in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		EA29290C1E622C0900739C76 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -274,22 +247,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		EA29290A1E622C0900739C76 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		EA2929141E622C0A00739C76 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 84F638CD1DEEC40100FDDD30 /* translater */;
-			targetProxy = EA2929131E622C0A00739C76 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		84F638DA1DEEC40100FDDD30 /* Main.storyboard */ = {
@@ -429,32 +387,6 @@
 			};
 			name = Release;
 		};
-		EA2929161E622C0A00739C76 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				DEVELOPMENT_TEAM = TK347G5S3D;
-				INFOPLIST_FILE = translaterUITests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = softgroup.translaterUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_TARGET_NAME = translater;
-			};
-			name = Debug;
-		};
-		EA2929171E622C0A00739C76 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				DEVELOPMENT_TEAM = TK347G5S3D;
-				INFOPLIST_FILE = translaterUITests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = softgroup.translaterUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_TARGET_NAME = translater;
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -472,15 +404,6 @@
 			buildConfigurations = (
 				84F638E61DEEC40100FDDD30 /* Debug */,
 				84F638E71DEEC40100FDDD30 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		EA2929151E622C0A00739C76 /* Build configuration list for PBXNativeTarget "translaterUITests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				EA2929161E622C0A00739C76 /* Debug */,
-				EA2929171E622C0A00739C76 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
