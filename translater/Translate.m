@@ -41,6 +41,7 @@ typedef enum : NSUInteger {
 // models
 @property (strong, nonatomic) TranslateEntity *translatingEntity;
 @property (strong, nonatomic) Translator *translator;
+@property (strong, nonatomic) NSTimer *updateTranslateTimer;
 
 @end
 
@@ -117,6 +118,7 @@ static NSString *langOnKey = @"LanguageOnSavedKey";
         self.selectedLangFrom = _selectedLangOn;
         self.selectedLangOn = holder;
         [self fullRefreshTranslate];
+        self.saveButton.selected = FALSE;
     }
 }
 
@@ -213,7 +215,6 @@ static NSString *langOnKey = @"LanguageOnSavedKey";
     if (![_selectedLangOn isEqualToString:selectedLangOn]) {
         _selectedLangOn = selectedLangOn;
         [[NSUserDefaults standardUserDefaults] setObject:selectedLangOn forKey:langOnKey];
-        //selectedLangOn = [selectedLangOn uppercaseString];
         [self.langOnButton setTitle:selectedLangOn forState:UIControlStateNormal];
         [self fullRefreshTranslate];
     }
@@ -224,7 +225,6 @@ static NSString *langOnKey = @"LanguageOnSavedKey";
     if (![_selectedLangFrom isEqualToString:selectedLangFrom]) {
         _selectedLangFrom = selectedLangFrom;
         [[NSUserDefaults standardUserDefaults] setObject:selectedLangFrom forKey:langFromKey];
-       // selectedLangFrom = [selectedLangFrom uppercaseString];
         [self.langFromButton setTitle:selectedLangFrom forState:UIControlStateNormal];
         [self fullRefreshTranslate];
     }
@@ -251,11 +251,16 @@ static NSString *langOnKey = @"LanguageOnSavedKey";
 
 - (void)textViewDidChange:(UITextView *)textView {
     
+    
+    
     if ([_inputTextView.text rangeOfCharacterFromSet:[NSCharacterSet letterCharacterSet]].location == NSNotFound) {
         // didn't found any characters - clear outputtextView
         [self output:nil withError:nil];
         self.translatingEntity = nil;
         self.saveButton.selected = FALSE;
+    } else {
+        [self.updateTranslateTimer invalidate];
+        self.updateTranslateTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(updateTranslate) userInfo:nil repeats:FALSE];
     }
 }
 
