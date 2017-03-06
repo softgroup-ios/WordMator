@@ -1,1 +1,1 @@
-Simple translater which was created at interview like technical test.
+This is a native IOS online translator, based on "Yandex" API.
