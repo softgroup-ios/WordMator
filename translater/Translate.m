@@ -6,6 +6,7 @@
 //  Copyright © 2017 admin. All rights reserved.
 //
 
+#import "AppColors.h"
 #import "LanguageSelecting.h"
 #import "Translator.h"
 #import "Translate.h"
@@ -28,6 +29,7 @@ typedef enum : NSUInteger {
 @property (weak, nonatomic) IBOutlet UIButton *clearInputButton;
 @property (weak, nonatomic) IBOutlet UIButton *saveButton;
 @property (weak, nonatomic) IBOutlet UITextView *copyrightText;
+@property (weak, nonatomic) IBOutlet UILabel *inputPlaceholder;
 
 // controls
 @property (strong, nonatomic) NSString *selectedLangFrom;
@@ -48,6 +50,7 @@ typedef enum : NSUInteger {
 @implementation Translate
 
 static NSString *langSelectingSegueIdentifier = @"SelectLanguage";
+static NSString *inputPlaceholder = @"Input text here...";
 static NSString *langFromKey = @"LanguageFromSavedKey";
 static NSString *langOnKey = @"LanguageOnSavedKey";
 
@@ -56,15 +59,15 @@ static NSString *langOnKey = @"LanguageOnSavedKey";
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [[UITabBar appearance] setUnselectedItemTintColor:[UIColor blackColor]];
-    [[UITabBar appearance] setTintColor:[UIColor grayColor]];
+    [[UITabBar appearance] setUnselectedItemTintColor:[UIColor darkGrayColor]];
+    [[UITabBar appearance] setTintColor:[AppColors secondColor]];
     
     // init view
     self.langFromButton.layer.cornerRadius = 5.0F;
     self.langFromButton.clipsToBounds = YES;
     self.langOnButton.layer.cornerRadius = 5.0F;
     self.langOnButton.clipsToBounds = YES;
-    self.inputTextView.textContainerInset = UIEdgeInsetsMake(8, 0, 8, self.clearInputButton.frame.size.width);
+    self.inputTextView.textContainerInset = UIEdgeInsetsMake(5, 5, 5, self.clearInputButton.frame.size.width);
     [self deactivateInputView];
     [self.loadingIndicator setHidden:FALSE];
     [self.reverseLangsButton setHidden:TRUE];
@@ -91,11 +94,6 @@ static NSString *langOnKey = @"LanguageOnSavedKey";
 
 - (void)viewWillAppear:(BOOL)animated {
     self.saveButton.selected = self.translatingEntity.isFavorite;
-}
-
-- (void)viewDidAppear:(BOOL)animated {
-    // set input active
-   // [self.inputTextView becomeFirstResponder];
 }
 
 #pragma mark - Users Actions
@@ -128,6 +126,7 @@ static NSString *langOnKey = @"LanguageOnSavedKey";
         [self output:nil withError:nil];
     }
     [self.clearInputButton setHidden:!(self.isInputEditing)];
+    [self.inputPlaceholder setHidden:(self.isInputEditing)];
     self.translatingEntity = nil;
     self.saveButton.selected = FALSE;
 }
@@ -155,15 +154,11 @@ static NSString *langOnKey = @"LanguageOnSavedKey";
 
 - (void)deactivateInputView {
     self.isInputEditing = FALSE;
-    self.inputTextView.layer.borderColor = [UIColor grayColor].CGColor;
-    self.inputTextView.layer.borderWidth = 1.0;
     [self.clearInputButton setHidden:[_inputTextView.text isEqualToString:@""]];
 }
 
 - (void)activateInputView {
     self.isInputEditing = TRUE;
-//    self.inputTextView.layer.borderColor = [UIColor redColor].CGColor;
-    self.inputTextView.layer.borderWidth = 2.0;
     [self.clearInputButton setHidden:FALSE];
 }
 
@@ -180,7 +175,7 @@ static NSString *langOnKey = @"LanguageOnSavedKey";
         _isErrorOutput = FALSE;
         [self.saveButton setHidden:FALSE];
         self.outputTextView.text = text;
-        self.outputTextView.textColor = [UIColor blackColor];
+        self.outputTextView.textColor = [UIColor darkGrayColor];
         self.outputTextView.textAlignment = NSTextAlignmentLeft;
         
     } else {
@@ -244,14 +239,19 @@ static NSString *langOnKey = @"LanguageOnSavedKey";
 
 #pragma mark - UITextViewDelegate
 
-- (BOOL)textViewShouldBeginEditing:(UITextView *)textView {
+- (void)textViewDidBeginEditing:(UITextView *)textView {
     [self activateInputView];
-    return YES;
+    [self.inputPlaceholder setHidden:TRUE];
 }
 
+- (void)textViewDidEndEditing:(UITextView *)textView {
+    if (![textView hasText]) {
+        [self.inputPlaceholder setHidden:FALSE];
+    }
+}
+
+
 - (void)textViewDidChange:(UITextView *)textView {
-    
-    
     
     if ([_inputTextView.text rangeOfCharacterFromSet:[NSCharacterSet letterCharacterSet]].location == NSNotFound) {
         // didn't found any characters - clear outputtextView

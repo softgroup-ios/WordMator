@@ -19,6 +19,7 @@
 		EA2929011E61B99B00739C76 /* Translate.m in Sources */ = {isa = PBXBuildFile; fileRef = EA2929001E61B99B00739C76 /* Translate.m */; };
 		EA2929041E61B9AF00739C76 /* History.m in Sources */ = {isa = PBXBuildFile; fileRef = EA2929031E61B9AF00739C76 /* History.m */; };
 		EA2929091E61E4C100739C76 /* LanguageSelecting.m in Sources */ = {isa = PBXBuildFile; fileRef = EA2929081E61E4C100739C76 /* LanguageSelecting.m */; };
+		EA36CB0D1E6DA0A300B44E4E /* AppColors.m in Sources */ = {isa = PBXBuildFile; fileRef = EA36CB0C1E6DA0A300B44E4E /* AppColors.m */; };
 		EA78AB1D1E6448CE00D2E4B4 /* HistoryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EA78AB1C1E6448CE00D2E4B4 /* HistoryCell.m */; };
 /* End PBXBuildFile section */
 
@@ -59,6 +60,8 @@
 		EA2929031E61B9AF00739C76 /* History.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = History.m; sourceTree = "<group>"; };
 		EA2929071E61E4C100739C76 /* LanguageSelecting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LanguageSelecting.h; sourceTree = "<group>"; };
 		EA2929081E61E4C100739C76 /* LanguageSelecting.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LanguageSelecting.m; sourceTree = "<group>"; };
+		EA36CB0B1E6DA0A300B44E4E /* AppColors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppColors.h; sourceTree = "<group>"; };
+		EA36CB0C1E6DA0A300B44E4E /* AppColors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppColors.m; sourceTree = "<group>"; };
 		EA78AB1B1E6448CE00D2E4B4 /* HistoryCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HistoryCell.h; sourceTree = "<group>"; };
 		EA78AB1C1E6448CE00D2E4B4 /* HistoryCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HistoryCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -96,6 +99,8 @@
 			children = (
 				84F638D41DEEC40100FDDD30 /* AppDelegate.h */,
 				84F638D51DEEC40100FDDD30 /* AppDelegate.m */,
+				EA36CB0B1E6DA0A300B44E4E /* AppColors.h */,
+				EA36CB0C1E6DA0A300B44E4E /* AppColors.m */,
 				EA2487421E5DA02B00FAFBE1 /* ViewControllers */,
 				EA78AB1A1E6448AF00D2E4B4 /* Cells */,
 				84F638EB1DEEC85100FDDD30 /* Model */,
@@ -240,6 +245,7 @@
 				EA1ED7A31E68497700717280 /* Detail.m in Sources */,
 				EA78AB1D1E6448CE00D2E4B4 /* HistoryCell.m in Sources */,
 				84F638D31DEEC40100FDDD30 /* main.m in Sources */,
+				EA36CB0D1E6DA0A300B44E4E /* AppColors.m in Sources */,
 				EA2929011E61B99B00739C76 /* Translate.m in Sources */,
 				84F638EA1DEEC83E00FDDD30 /* Translator.m in Sources */,
 				EA2929041E61B9AF00739C76 /* History.m in Sources */,
