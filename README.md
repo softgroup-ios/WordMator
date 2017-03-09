@@ -16,7 +16,7 @@ This is a native IOS online translator, based on "Yandex" API.
 
 - Translate text on 90 languages
 - Save favorites translations
-- Quick search at favotires and language select list
+- Quick search at favorites and language select list
 - Saving your last 5 selected languages
 - Language definition ability
 - Nice and slowly minimalist design
